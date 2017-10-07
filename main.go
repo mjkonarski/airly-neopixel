@@ -48,8 +48,6 @@ func main() {
 	colorProvider := NewColorProvider(viper.GetFloat64("neopixel.brightness"))
 
 	for {
-		time.Sleep(time.Duration(viper.GetInt("sleep")) * time.Second)
-
 		resp, err := resty.R().
 			SetQueryParams(map[string]string{
 				"latitude":  viper.GetString("latitude"),
@@ -81,12 +79,13 @@ func main() {
 
 		historyPixel := historyPixels - 1
 		for i := historyLen - 1; i >= 0 && historyPixel >= 0; i-- {
-			fmt.Printf("%d %f\n", i, response.History[i].Measurement.AirQualityIndex)
+			fmt.Printf("%f\n", response.History[i].Measurement.AirQualityIndex)
 			color := colorProvider.getColor(response.History[i].Measurement.AirQualityIndex)
 			neopixel.setColor(historyPixel, color)
 			historyPixel--
 		}
 
 		fmt.Println()
+		time.Sleep(time.Duration(viper.GetInt("sleep")) * time.Second)
 	}
 }
