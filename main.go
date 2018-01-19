@@ -13,6 +13,15 @@ import (
 
 type Measurement struct {
 	AirQualityIndex float32 `json:"airQualityIndex"`
+	Humidity        float32 `json:"humidity"`
+	Pm1             float32 `json:"pm1"`
+	Pm10            float32 `json:"pm10"`
+	Pm25            float32 `json:"pm25"`
+	PollutionLevel  float32 `json:"pollutionLevel"`
+	Pressure        float32 `json:"pressure"`
+	Temperature     float32 `json:"temperature"`
+	WindDirection   float32 `json:"windDirection"`
+	WindSpeed       float32 `json:"windSpeed"`
 }
 
 type History struct {
@@ -67,10 +76,10 @@ func main() {
 		}
 
 		fmt.Printf("Current air quality: %f\n",
-			response.Measurement.AirQualityIndex)
+			response.Measurement.Pm25)
 
 		neopixel.setColor(7,
-			colorProvider.getColor(response.Measurement.AirQualityIndex))
+			colorProvider.getColor(response.Measurement.Pm25))
 
 		fmt.Println("Previous measurements:")
 
@@ -79,8 +88,8 @@ func main() {
 
 		historyPixel := historyPixels - 1
 		for i := historyLen - 1; i >= 0 && historyPixel >= 0; i-- {
-			fmt.Printf("%f\n", response.History[i].Measurement.AirQualityIndex)
-			color := colorProvider.getColor(response.History[i].Measurement.AirQualityIndex)
+			fmt.Printf("%f\n", response.History[i].Measurement.Pm25)
+			color := colorProvider.getColor(response.History[i].Measurement.Pm25)
 			neopixel.setColor(historyPixel, color)
 			historyPixel--
 		}

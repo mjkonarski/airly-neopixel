@@ -14,10 +14,6 @@ func (colorProvider *ColorProvider) getColor(
 	case airQualityIndex <= 25:
 		return colorProvider.getAdjustedColor(0, 50, 0)
 	case airQualityIndex <= 50:
-		return colorProvider.getAdjustedColor(40, 50, 0)
-	case airQualityIndex <= 75:
-		return colorProvider.getAdjustedColor(70, 50, 0)
-	case airQualityIndex <= 90:
 		return colorProvider.getAdjustedColor(80, 40, 0)
 	case airQualityIndex <= 100:
 		return colorProvider.getAdjustedColor(90, 0, 0)
